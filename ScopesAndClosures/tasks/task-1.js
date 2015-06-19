@@ -38,7 +38,7 @@ function solve() {
 		}
 
 		function validateISBN(ISBN) {
-		    if (!/\d{10}|\d{13}/.test(ISBN)) {
+		    if (!/^(?:\d{10}|\d{13})$/.test(ISBN)) {
 		        throw new Error('ISBN must be 10 or 13 digits');
 		    }
 		}
