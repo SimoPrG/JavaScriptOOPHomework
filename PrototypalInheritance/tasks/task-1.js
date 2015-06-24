@@ -81,6 +81,7 @@ function solve() {
                 switch (true) {
                     case domElement.isPrototypeOf(child):
                         child.parent = this;
+                        // Intentional Fallthrough !
                     case typeof child === 'string':
                         this.children.push(child);
                         break;
