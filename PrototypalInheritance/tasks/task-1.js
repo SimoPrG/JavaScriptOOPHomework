@@ -172,11 +172,4 @@ function solve() {
     return domElement;
 }
 
-var domElem = solve(),
-    child = Object.create(domElem).init('child'),
-    parent = Object.create(domElem).init('parent').appendChild(child).innerHTML;
-
-
-console.log(parent);
-
 module.exports = solve;
