@@ -1,3 +1,4 @@
+//@formatter:off
 /* Task Description */
 /* 
 * Create a module for a Telerik Academy course
@@ -43,7 +44,7 @@
       * 75% of the exam result
       * 25% the submitted homework (count of submitted homeworks / count of all homeworks) for the course
 */
-
+//@formatter:on
 function solve() {
     function validateTitle(title) {
         if (!title.length) {
@@ -74,7 +75,7 @@ function solve() {
     }
 
     function validateIDInCollection(id, collection, errorMessage) {
-        var idExists = this[collection].some(function(item) {
+        var idExists = this[collection].some(function (item) {
             return item.id == id;
         });
 
@@ -84,7 +85,7 @@ function solve() {
     }
 
     function getStudentByID(studentID) {
-        var studentIndex = this.students.map(function(student) {
+        var studentIndex = this.students.map(function (student) {
             return student.id;
         }).indexOf(studentID);
 
@@ -122,126 +123,126 @@ function solve() {
         homeworkWeight = 1 - examWeight,
 
         Course = {
-		init: function(title, presentations) {
-			this.title = title;
-            this.presentations = presentations;
-            this.students = [];
+            init: function (title, presentations) {
+                this.title = title;
+                this.presentations = presentations;
+                this.students = [];
 
-            return this;
-		},
+                return this;
+            },
 
-		addStudent: function(name) {
-            var firstAndLastName,
-                firstName,
-                lastName,
-                id;
+            addStudent: function (name) {
+                var firstAndLastName,
+                    firstName,
+                    lastName,
+                    id;
 
-            validateStudentName(name);
+                validateStudentName(name);
 
-            firstAndLastName = name.match(studentNameRegEx);
-            firstName = firstAndLastName[1];
-            lastName = firstAndLastName[2];
+                firstAndLastName = name.match(studentNameRegEx);
+                firstName = firstAndLastName[1];
+                lastName = firstAndLastName[2];
 
-            id = this.students.length + 1;
+                id = this.students.length + 1;
 
-            this.students.push({
-                firstname: firstName,
-                lastname: lastName,
-                id: id,
-                submittedHomework: Object.create(null),
-                examScore: 0,
-                finalScore: 0
-            });
-
-            return id;
-		},
-
-		getAllStudents: function() {
-            return this.students.map(function(student) {
-                return {
-                    firstname: student.firstname,
-                    lastname: student.lastname,
-                    id: student.id
-                }
-            });
-		},
-
-		submitHomework: function(studentID, homeworkID) {
-            var student;
-
-            validateStudentID.call(this, studentID);
-            validateHomeworkID.call(this, homeworkID);
-
-            student = getStudentByID.call(this, studentID);
-            student.submittedHomework[homeworkID] = true;
-		},
-
-		pushExamResults: function(results) {
-            results.forEach(function(result){
-                validateStudentID.call(this, result.StudentID);
-                validateExamScore(result.Score);
-            }, this);
-
-            validateStudentIDsAreNotDuplicatedInExamResults(results);
-
-            results.forEach(function(result) {
-                var student = getStudentByID.call(this, result.StudentID);
-
-                student.examScore = result.Score;
-            }, this);
-		},
-
-		getTopStudents: function() {
-            var i,
-                topTenStudents = [],
-                presentationsCount = this.presentations.length,
-                studentsCount = this.students.length,
-                studentsUpToTenCount = (studentsCount > 10 ? 10 : studentsCount);
-
-            // Calculate final score for each student.
-            this.students.forEach(function(student) {
-                var submittedHomeworksCount = Object.keys(student.submittedHomework).length;
-
-                student.finalScore =
-                    ((homeworkWeight * submittedHomeworksCount) / presentationsCount) + (student.examScore * examWeight);
-            });
-
-            this.students.sort(function(firstStudent, secondStudent) {
-                return secondStudent.finalScore - firstStudent.finalScore;
-            });
-
-            for (i = 0; i < studentsUpToTenCount; i += 1) {
-                topTenStudents.push({
-                    firstname: this.students[i].firstname,
-                    lastname: this.students[i].lastname,
-                    id: this.students[i].id
+                this.students.push({
+                    firstname: firstName,
+                    lastname: lastName,
+                    id: id,
+                    submittedHomework: Object.create(null),
+                    examScore: 0,
+                    finalScore: 0
                 });
+
+                return id;
+            },
+
+            getAllStudents: function () {
+                return this.students.map(function (student) {
+                    return {
+                        firstname: student.firstname,
+                        lastname: student.lastname,
+                        id: student.id
+                    }
+                });
+            },
+
+            submitHomework: function (studentID, homeworkID) {
+                var student;
+
+                validateStudentID.call(this, studentID);
+                validateHomeworkID.call(this, homeworkID);
+
+                student = getStudentByID.call(this, studentID);
+                student.submittedHomework[homeworkID] = true;
+            },
+
+            pushExamResults: function (results) {
+                results.forEach(function (result) {
+                    validateStudentID.call(this, result.StudentID);
+                    validateExamScore(result.Score);
+                }, this);
+
+                validateStudentIDsAreNotDuplicatedInExamResults(results);
+
+                results.forEach(function (result) {
+                    var student = getStudentByID.call(this, result.StudentID);
+
+                    student.examScore = result.Score;
+                }, this);
+            },
+
+            getTopStudents: function () {
+                var i,
+                    topTenStudents = [],
+                    presentationsCount = this.presentations.length,
+                    studentsCount = this.students.length,
+                    studentsUpToTenCount = (studentsCount > 10 ? 10 : studentsCount);
+
+                // Calculate final score for each student.
+                this.students.forEach(function (student) {
+                    var submittedHomeworksCount = Object.keys(student.submittedHomework).length;
+
+                    student.finalScore =
+                        ((homeworkWeight * submittedHomeworksCount) / presentationsCount) + (student.examScore * examWeight);
+                });
+
+                this.students.sort(function (firstStudent, secondStudent) {
+                    return secondStudent.finalScore - firstStudent.finalScore;
+                });
+
+                for (i = 0; i < studentsUpToTenCount; i += 1) {
+                    topTenStudents.push({
+                        firstname: this.students[i].firstname,
+                        lastname: this.students[i].lastname,
+                        id: this.students[i].id
+                    });
+                }
+
+                return topTenStudents;
             }
+        };
 
-            return topTenStudents;
-		}
-	};
+    Object.defineProperties(Course, {
+        title: {
+            set: function (title) {
+                validateTitle(title);
+                this._title = title;
+            },
 
-	Object.defineProperties(Course, {
-		title: {
-			set: function(title) {
-			    validateTitle(title);
-				this._title = title;
-			},
-
-			get: function() {
-				return this._title;
-			}
-		},
+            get: function () {
+                return this._title;
+            }
+        },
         presentations: {
-            set: function(presentations) {
+            set: function (presentations) {
                 if (presentations.constructor !== Array || !presentations.length) {
                     throw new Error('Presentations must be an non empty array.');
                 }
 
                 presentations.forEach(validateTitle);
 
-                this._presentations = presentations.map(function(presentation, index) {
+                this._presentations = presentations.map(function (presentation, index) {
                     return {
                         title: presentation,
                         id: index + 1
@@ -249,13 +250,13 @@ function solve() {
                 });
             },
 
-            get: function() {
+            get: function () {
                 return this._presentations;
             }
         }
-	});
+    });
 
-	return Course;
+    return Course;
 }
 
 module.exports = solve;
